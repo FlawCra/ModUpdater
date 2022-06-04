@@ -44,7 +44,7 @@ public class CurseForgeStrategy implements UpdateStrategy {
 
         String data;
         try {
-            data = Util.urlToString("https://addons-ecs.forgesvc.net/api/v2/addon/" + projectID + "/files");
+            data = Util.urlToString("https://curseapi.flawcra.workers.dev/v1/mods/" + projectID + "/files");
         } catch (IOException e) {
             ModUpdater.logWarn(name, e.toString());
             return null;
