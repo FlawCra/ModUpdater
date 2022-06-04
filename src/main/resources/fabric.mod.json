@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "modupdater",
+  "version": "${version}",
+  "name": "ModUpdater",
+  "description": "A simple Minecraft mod updater.",
+  "authors": [
+    "FlawCra",
+    "TheBrokenRail"
+  ],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/modupdater/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "cc.flawcra.modupdater.ModUpdater"
+    ],
+    "modmenu": [
+      "cc.flawcra.modupdater.client.ModMenu"
+    ]
+  },
+  "mixins": [
+    "modupdater.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "fabric": "*",
+    "minecraft": "1.18.x"
+  },
+  "modupdater": {
+    "strategy": "maven",
+    "repository": "https://repo.flawcra.cc/releases",
+    "group": "cc.flawcra",
+    "artifact": "modupdater"
+  }
+}
