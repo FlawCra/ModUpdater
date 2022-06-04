@@ -29,8 +29,9 @@ public class MavenStrategy implements UpdateStrategy {
 
     public MavenStrategy() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setValidating(true);
+        factory.setValidating(false);
         factory.setIgnoringElementContentWhitespace(true);
+        factory.setNamespaceAware(false);
         try {
             builder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
@@ -70,6 +71,8 @@ public class MavenStrategy implements UpdateStrategy {
             ModUpdater.logWarn(name, e.toString());
             return null;
         }
+
+        doc.getDocumentElement().normalize();
 
         XPath xPath = XPathFactory.newInstance().newXPath();
         NodeList versions;
