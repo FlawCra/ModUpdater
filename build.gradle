@@ -14,6 +14,12 @@ repositories {
     }
 }
 
+configurations {
+    includeTransitive {
+        transitive = true
+    }
+}
+
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -24,7 +30,19 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
-    implementation("com.squareup.moshi:moshi:${project.moshi_version}")
+    implementation "com.squareup.moshi:moshi:${project.moshi_version}"
+    includeTransitive "com.squareup.moshi:moshi:${project.moshi_version}"
+}
+
+project.afterEvaluate {
+    configurations.includeTransitive.incoming.resolutionResult.allComponents {
+        if (it.id instanceof ModuleComponentIdentifier) {
+            def that = it
+            dependencies {
+                include group: that.id.getGroup(), name: that.id.getModule(), version: that.id.getVersion()
+            }
+        }
+    }
 }
 
 processResources {
@@ -69,7 +87,7 @@ jar {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'modupater'
+            artifactId = 'modupdater'
             from components.java
             versionMapping {
                 usage('java-api') {
@@ -82,7 +100,6 @@ publishing {
             pom {
                 name = 'ModUpdater'
                 description = 'A simple Minecraft mod updater.'
-                url = 'http://www.example.com/library'
                 developers {
                     developer {
                         id = 'flawcra'
