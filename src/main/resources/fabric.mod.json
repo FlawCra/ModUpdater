@@ -8,7 +8,11 @@
     "FlawCra",
     "TheBrokenRail"
   ],
-  "contact": {},
+  "contact": {
+    "homepage": "https://flawcra.cc/",
+    "sources": "https://github.com/FlawCra/ModUpdater.git",
+    "issues": "https://github.com/FlawCra/ModUpdater/issues"
+  },
   "license": "All-Rights-Reserved",
   "icon": "assets/modupdater/icon.png",
   "environment": "*",
