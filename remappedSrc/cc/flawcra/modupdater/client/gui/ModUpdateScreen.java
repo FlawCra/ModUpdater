@@ -6,13 +6,13 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ScreenTexts;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.EntryListWidget;
 import net.minecraft.client.util.NarratorManager;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
 
 import java.util.Arrays;
@@ -27,7 +27,7 @@ public class ModUpdateScreen extends Screen {
     private static final int BOTTOM_ROW = 60;
 
     public ModUpdateScreen(Screen parent) {
-        super(Text.translatable("gui." + ModUpdater.NAMESPACE + ".title"));
+        super(new TranslatableText("gui." + ModUpdater.NAMESPACE + ".title"));
         this.parent = parent;
     }
 
@@ -43,8 +43,8 @@ public class ModUpdateScreen extends Screen {
         int refreshX = width / 2 - buttonWidth - padding;
         int downloadX = width / 2 + padding;
         int doneX = width / 2 - buttonWidth / 2;
-        addDrawableChild(refresh = new ButtonWidget(refreshX, actionRowY, buttonWidth, buttonHeight, Text.translatable("gui." + ModUpdater.NAMESPACE + ".refresh"), buttonWidget -> ModUpdater.findUpdates()));
-        addDrawableChild(download = new ButtonWidget(downloadX, actionRowY, buttonWidth, buttonHeight, Text.translatable("gui." + ModUpdater.NAMESPACE + ".download"), buttonWidget -> {
+        addDrawableChild(refresh = new ButtonWidget(refreshX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".refresh"), buttonWidget -> ModUpdater.findUpdates()));
+        addDrawableChild(download = new ButtonWidget(downloadX, actionRowY, buttonWidth, buttonHeight, new TranslatableText("gui." + ModUpdater.NAMESPACE + ".download"), buttonWidget -> {
             if (list.getSelectedOrNull() != null) {
                 Util.getOperatingSystem().open(list.getSelectedOrNull().update.downloadURL);
             }
@@ -110,7 +110,7 @@ public class ModUpdateScreen extends Screen {
         public void setSelected(ModUpdateEntry entry) {
             super.setSelected(entry);
             if (entry != null) {
-                NarratorManager.INSTANCE.narrate(Text.translatable("narrator.select", entry.update.text).getString());
+                NarratorManager.INSTANCE.narrate(new TranslatableText("narrator.select", entry.update.text).asString());
             }
         }
 
@@ -129,7 +129,7 @@ public class ModUpdateScreen extends Screen {
             reload();
             super.render(matrices, mouseX, mouseY, delta);
             if (updates == null) {
-                drawCenteredText(matrices, screen.textRenderer, Text.translatable("gui.modupdater.loading"), width / 2, (bottom - top) / 2 - screen.textRenderer.fontHeight + top, 16777215);
+                drawCenteredText(matrices, screen.textRenderer, new TranslatableText("gui.modupdater.loading"), width / 2, (bottom - top) / 2 - screen.textRenderer.fontHeight + top, 16777215);
             }
         }
 
